@@ -19,10 +19,15 @@ st.markdown(
     through the following steps:
 
         1. 📂 Load your dataset
-        2. 👈 Chose a numerical column that yo want to analyze
+        2. 👈 Chose a numerical column that you want to analyze
         3. 🪥 Chose the method you want to apply to remove possible \
 inexistent values
         4. 📊 See the findings and decide what to do with them
+            This version display:
+                * Statistics of original data
+                * Boxplot
+                * Z Score
+                * Median Absolute deviation (MAD) Algorithm
 
     I hope you enjoy.
 
