@@ -88,15 +88,15 @@ def plot_bxp(input_df, container, input_whis, num_outliers):
     msg = " outlier " if num_outliers == 0 else " outliers"
     container.write(f'{num_outliers}{msg}')
     fig_bxp, _ = plt.subplots(figsize=(3, 7))
-    sns.boxplot(
-        data=input_df,
-        # Apparently a bug in Seaborn forces such transformation
-        # Must be a float number, not rounded
-        y=input_df.values/1.0001, 
-        whis=input_whis,
-        orient='y',
-        width=0.3
-    )
+    #sns.boxplot(
+    #    data=input_df,
+    #    # Apparently a bug in Seaborn forces such transformation
+    #    # Must be a float number, not rounded
+    #    y=input_df.values/1.0001, 
+    #    whis=input_whis,
+    #    orient='y',
+    #    width=0.3
+    #)
     container.pyplot(fig_bxp)
 
 
