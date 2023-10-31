@@ -199,6 +199,7 @@ with st.container():
     n_outliers = len(st.session_state['outliers_df'].loc[st.session_state['outliers_df']['bxp_outlier'] == True])
 
     #plot_bxp(os, c_bp_af, whis, n_outliers)
+    plot_bxp(st.session_state['dataframe'][st.session_state['selected_feature']], c_bp_af, whis, n_outliers)
     # The 5 numbers
     c_bp_5.table(c_bp_df.describe().apply("{0:.2f}".format))
 
