@@ -18,11 +18,11 @@ if 'outliers_df' not in st.session_state:
 
 OUTPUT_FILENAME = "outliers.csv"
 
-
-def save_file():
-    """Save the Outliers Dataset in a file
+def convert_df(df):
+    """Prepare the dataframe to be downloaded
     """
-    st.session_state['outliers_df'].to_csv(OUTPUT_FILENAME, index=False)
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv(index=False).encode('utf-8')
 
 
 st.set_page_config(layout="wide")
@@ -198,8 +198,7 @@ with st.container():
     c_bp_df = st.session_state['outliers_df'].loc[st.session_state['outliers_df']['bxp_outlier'] == False][st.session_state['selected_feature']]
     n_outliers = len(st.session_state['outliers_df'].loc[st.session_state['outliers_df']['bxp_outlier'] == True])
 
-    #plot_bxp(os, c_bp_af, whis, n_outliers)
-    plot_bxp(st.session_state['dataframe'][st.session_state['selected_feature']], c_bp_af, whis, n_outliers)
+    plot_bxp(os, c_bp_af, whis, n_outliers)
     # The 5 numbers
     c_bp_5.table(c_bp_df.describe().apply("{0:.2f}".format))
 
@@ -325,4 +324,11 @@ with st.container():
 
 # Save File
 with st.container():
-    st.button("Save File", type="primary", on_click=save_file)
+    csv = convert_df(st.session_state['outliers_df'])
+
+    st.download_button(
+    label="Download data as CSV",
+    data=csv,
+    file_name=OUTPUT_FILENAME,
+    mime='text/csv'
+)
