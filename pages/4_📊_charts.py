@@ -56,18 +56,21 @@ def get_bxp_outliers(data, bxp_whis):
     return result
 #    return data[is_lower | is_higher].sort_values()
 
-
+cont_org = st.container()
 c_no_5, c_no_h, c_no_p, c_no_s, c_no_a = st.columns(
     5,
     gap="small"
 )
+cont_bxp = st.container()
 c_bp_5, c_bp_h, c_bp_p, c_bp_s, c_bp_af, c_bp_as = st.columns([
     1.8, 1.8, 1.8, 1.8, 1.8, 1
 ])
+cont_zsc= st.container()
 c_zs_5, c_zs_h, c_zs_p, c_zs_s, c_zs_a = st.columns(
     5,
     gap="small"
 )
+cont_mad = st.container()
 c_ma_5, c_ma_h, c_ma_p, c_ma_s, c_ma_a = st.columns(
     5,
     gap="small"
@@ -149,6 +152,7 @@ def plot_scatterplot(input_df, container):
 
 # Original Data
 with st.container():
+    cont_org.write("Statistics of the Original Data")
     # The 5 numbers
     c_no_5.table(os.describe().apply("{0:.2f}".format))
 
@@ -173,6 +177,7 @@ with st.container():
 
 # Box PLot
 with st.container():
+    cont_bxp.write("Boxplot Outliers")
     DEFAULT_WHIS = 1.5
 
     def calculate_bxp():
@@ -220,6 +225,7 @@ with st.container():
 
 # Z Score
 with st.container():
+    cont_zsc.write("Z Score Outliers")
     # Adjust Z_Score threshold
     DEFAULT_Z_SCORE = 4.0
 
@@ -265,7 +271,8 @@ with st.container():
 
 # MAD Score
 with st.container():
-    # Adjust Z_Score threshold
+    cont_mad.write("MAD Outliers")
+    # Adjust MAD threshold
     DEFAULT_MAD_THRESHOLD = 4.5
 
     def calculate_mad():
