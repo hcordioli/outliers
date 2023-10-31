@@ -92,7 +92,7 @@ def plot_bxp(input_df, container, input_whis, num_outliers):
         data=input_df,
         # Apparently a bug in Seaborn forces such transformation
         # Must be a float number, not rounded
-        y=input_df.values, 
+        y=input_df.values/1.0001, 
         whis=input_whis,
         orient='y',
         width=0.3
@@ -198,7 +198,12 @@ with st.container():
     c_bp_df = st.session_state['outliers_df'].loc[st.session_state['outliers_df']['bxp_outlier'] == False][st.session_state['selected_feature']]
     n_outliers = len(st.session_state['outliers_df'].loc[st.session_state['outliers_df']['bxp_outlier'] == True])
 
-    plot_bxp(os, c_bp_af, whis, n_outliers)
+    plot_bxp(
+        pd.DataFrame(os), 
+        c_bp_af, 
+        whis, 
+        n_outliers
+    )
     # The 5 numbers
     c_bp_5.table(c_bp_df.describe().apply("{0:.2f}".format))
 
