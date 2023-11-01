@@ -12,6 +12,10 @@ from scipy.stats import shapiro
 from scipy.stats import zscore
 from pyod.models.mad import MAD
 
+if 'selected_feature' not in st.session_state:
+    st.warning("You must have picked a feature. Click on Choose Tab to do that first.")
+    st.stop()  # App won't run anything after this line
+    
 os = st.session_state['selected_serie']
 if 'outliers_df' not in st.session_state:
     st.session_state['outliers_df'] = pd.DataFrame(os)
@@ -220,8 +224,8 @@ with st.container():
 
     whis_selector = c_bp_as.slider(
         'Select whis:',
-        min_value=0.1,
-        max_value=4.0,
+        min_value=1.0,
+        max_value=2.0,
         value=DEFAULT_WHIS,
         step=0.1,
         key="bxp_whis",

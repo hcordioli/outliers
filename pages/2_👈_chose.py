@@ -5,9 +5,12 @@ anomaly/outlier detection
 import streamlit as st
 import numpy as np
 
-if st.session_state['dataframe'] is None:
+if 'dataframe' not in st.session_state:
     st.warning("You must have uploaded a file. Click on Load Tab to do that first.")
     st.stop()  # App won't run anything after this line
+#elif 'selected_feature' not in st.session_state:
+#    st.warning("You must have picked a feature. Click on Choose Tab to do that first.")
+#    st.stop()  # App won't run anything after this line
 
 
 num_df = st.session_state['dataframe'].select_dtypes(include=np.number)

@@ -10,14 +10,14 @@ import numpy as np
 
 sys.tracebacklimit = 0
 
-if 'dataframe' not in st.session_state:
-    st.session_state['dataframe'] = None
-
 
 def uploader_callback():
 
     """Callback function to handle file load
     """
+    if 'dataframe' not in st.session_state:
+        st.session_state['dataframe'] = None
+    
     if st.session_state['file_uploader'] is not None:
         try:
             st.session_state['dataframe'] = pd.read_csv(
@@ -29,11 +29,14 @@ def uploader_callback():
         except pd.errors.EmptyDataError as empty_file_error:
             st.write("CSV file is empty")
             raise empty_file_error from None
-        
+    
+    if st.session_state['dataframe'] is not None:
+        num_df = st.session_state['dataframe']._get_numeric_data()        
+        st.write(num_df.head())
 
 sep_picker = st.selectbox(
     'What is CSV File separator?',
-    (',', ';', '\t'),
+    (',', ';', '\\t'),
     key="csv_separator"
 )
 
@@ -41,6 +44,3 @@ df = st.file_uploader(
     label="File uploader", on_change=uploader_callback, key="file_uploader"
 )
 
-if st.session_state['dataframe'] is not None:
-    num_df = st.session_state['dataframe']._get_numeric_data()        
-    st.write(num_df.head())
